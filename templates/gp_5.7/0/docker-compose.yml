@@ -1,0 +1,52 @@
+version: '2'
+services:
+  gpmaster:
+     image: 10.0.0.96:5000/database/gp_orca_57 
+     hostname: master
+     labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.scheduler.affinity:host_label: key1=102
+     networks: 
+       - docker_gwbridge
+     ports:
+       - "20040:2345"
+     volumes:
+       - /opt/gpmaster/gpdata_orca_57:/home/gpadmin/gpdata
+       - /opt/gpmaster/conf_orca_57:/home/gpadmin/conf
+     privileged: true
+     tty: true
+  gpnode1:
+     image: 10.0.0.96:5000/database/gp_orca_57
+     hostname: sdw1
+     labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.scheduler.affinity:host_label: key1=104
+     networks: 
+       - docker_gwbridge
+     ports:
+       - "20041:40000"
+       - "20042:40001"
+       - "20043:43000"
+       - "20044:43001"
+     volumes:
+       - /opt/gpnode1/gpadta_orca_57:/home/gpadmin/gpdata
+     privileged: true
+     tty: true
+  gpnode2:
+     image: 10.0.0.96:5000/database/gp_orca_57
+     hostname: sdw2
+     labels:
+      io.rancher.scheduler.global: 'true'
+      io.rancher.scheduler.affinity:host_label: key1=106
+     networks: 
+       - docker_gwbridge
+     ports:
+       - "20045:40000"
+       - "20046:40001"
+       - "20047:43000"
+       - "20048:43001"
+     volumes:
+       - /opt/gpnode2/gpdata_orca_57:/home/gpadmin/gpdata
+     privileged: true
+     tty: true
+
